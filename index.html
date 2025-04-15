@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <!-- REPLACE THIS LINE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Smart Fridge Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">SmartFridge</a>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#fridge">My Fridge</a></li>
+                <li><a href="#recipes">Recipes</a></li>
+                <li><a href="#learn-more">Learn More</a></li>
+            </ul>
+
+            <!-- Add in navbar -->
+<div class="theme-toggle">
+  <button id="themeToggle">
+      <span class="light-mode">🌞</span>
+      <span class="dark-mode">🌙</span>
+  </button>
+</div>
+            <div class="auth-buttons">
+                <button id="loginBtn" class="btn-auth">Login</button>
+                <button id="signupBtn" class="btn-auth btn-primary">Sign Up</button>
+            </div>
+            <button class="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Add to index.html -->
+<!-- Update the login/signup modals -->
+<div class="modal" id="authModal">
+  <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="auth-forms">
+          <div class="auth-form active" id="loginForm">
+              <h3>Login</h3>
+              <form id="loginForm">
+                  <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" id="loginEmail" required>
+                      <span class="error-message"></span>
+                  </div>
+                  <div class="form-group">
+                      <label>Password</label>
+                      <input type="password" id="loginPassword" required>
+                      <span class="error-message"></span>
+                  </div>
+                  <button type="submit" class="btn-primary">Login</button>
+              </form>
+              <p class="auth-switch">Don't have an account? <a href="#signup">Sign Up</a></p>
+          </div>
+
+          <div class="auth-form" id="signupForm">
+              <h3>Sign Up</h3>
+              <form id="signupForm">
+                  <div class="form-group">
+                      <label>Name</label>
+                      <input type="text" id="signupName" required>
+                      <span class="error-message"></span>
+                  </div>
+                  <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" id="signupEmail" required>
+                      <span class="error-message"></span>
+                  </div>
+                  <div class="form-group">
+                      <label>Password</label>
+                      <input type="password" id="signupPassword" required>
+                      <span class="error-message"></span>
+                  </div>
+                  <div class="form-group">
+                      <label>Confirm Password</label>
+                      <input type="password" id="signupConfirmPassword" required>
+                      <span class="error-message"></span>
+                  </div>
+                  <button type="submit" class="btn-primary">Sign Up</button>
+              </form>
+              <p class="auth-switch">Already have an account? <a href="#login">Login</a></p>
+          </div>
+      </div>
+  </div>
+</div>
+
+    <!-- Notification Panel -->
+    <div class="notification-panel">
+        <div class="notification-icon">
+            <i class="fas fa-bell"></i>
+            <span class="notification-count">2</span>
+        </div>
+        <div class="notification-dropdown">
+            <div class="notification-item alert">
+                <p>Temperature alert: Fridge is too warm (8°C)</p>
+                <small>10 mins ago</small>
+            </div>
+            <div class="notification-item warning">
+                <p>Milk will expire in 2 days</p>
+                <small>1 hour ago</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+
+    
+
+    
+</section>
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero-section">
+                <h1>Smart Fridge Manager</h1>
+                <p>Keep track of your food, reduce waste, and discover recipes</p>
+                <div class="hero-buttons">
+                  <button class="btn-primary" onclick="document.querySelector('[href=\'#fridge\']').click()">
+                    <i class="fas fa-rocket"></i>
+                    Get Started
+                  </button>
+                  
+                  <!-- Add the Learn More button here -->
+                  <button class="btn-secondary" onclick="document.querySelector('[href=\'#learn-more\']').click()">
+                    <i class="fas fa-info-circle"></i>
+                    Learn More
+                  </button>
+                </div>
+              </div>
+              <div class="features-container">
+                <div class="feature-card">
+                    <i class="fas fa-refrigerator"></i>
+                    <h3>Smart Fridge Tracking</h3>
+                    <p>Monitor what's in your fridge and expiration dates</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Recipe Generator</h3>
+                    <p>Get recipes based on what you have available</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bell"></i>
+                    <h3>Smart Alerts</h3>
+                    <p>Get notified about expiring items and temperature changes</p>
+                </div>
+            </div>
+              </div>
+            
+            
+        </section>
+
+        <!-- Fridge Section -->
+        <section id="fridge" class="section">
+            <div class="section-header">
+                <h2>My Fridge Contents</h2>
+                <button id="addItemBtn" class="btn-primary">+ Add Item</button>
+            </div>
+            
+            <div class="fridge-controls">
+                <input type="text" placeholder="Search items..." class="search-bar" id="fridgeSearch">
+                <select class="sort-options" id="sortFridge">
+                    <option value="name">Sort by Name</option>
+                    <option value="expiry">Sort by Expiry Date</option>
+                    <option value="category">Sort by Category</option>
+                </select>
+            </div>
+            
+            <div class="fridge-items-grid" id="fridgeItems">
+                <!-- Items will be dynamically added here -->
+            </div>
+            
+            <!-- Add Item Modal -->
+            <div id="addItemModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h3>Add New Item</h3>
+                    <form id="addItemForm">
+                        <div class="form-group">
+                            <label for="itemName">Item Name</label>
+                            <input type="text" id="itemName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="itemCategory">Category</label>
+                            <select id="itemCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="dairy">Dairy</option>
+                                <option value="vegetables">Vegetables</option>
+                                <option value="meat">Meat</option>
+                                <option value="fruits">Fruits</option>
+                                <option value="beverages">Beverages</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="itemExpiry">Expiry Date</label>
+                            <input type="date" id="itemExpiry" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="itemQuantity">Quantity</label>
+                            <input type="text" id="itemQuantity" placeholder="e.g., 1L, 500g" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Add to Fridge</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recipes Section -->
+        <section id="recipes" class="section">
+            <h2>Recipe Generator</h2>
+            
+            <div class="recipe-controls">
+                <div class="available-ingredients">
+                    <h3>Available Ingredients</h3>
+                    <div class="ingredients-list" id="ingredientsList">
+                        <!-- Ingredients will be added here -->
+                    </div>
+                    <div class="add-custom-ingredient">
+                        <input type="text" placeholder="Add custom ingredient..." id="customIngredient">
+                        <button id="addIngredientBtn" class="btn-secondary">+ Add</button>
+                    </div>
+                </div>
+                
+                <div class="recipe-filters">
+                    <button id="generateRecipesBtn" class="btn-primary">Generate Recipes</button>
+                    <select id="cuisineFilter">
+                        <option value="any">Any Cuisine</option>
+                        <option value="italian">Italian</option>
+                        <option value="indian">Indian</option>
+                        <option value="mexican">Mexican</option>
+                        <option value="chinese">Chinese</option>
+                    </select>
+                    <select id="mealTypeFilter">
+                        <option value="any">Any Meal</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="snack">Snack</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="recipe-results" id="recipeResults">
+                <!-- Recipes will be dynamically added here -->
+                <div class="empty-state">
+                    <i class="fas fa-utensils"></i>
+                    <p>Generate recipes based on your available ingredients</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learn More Section -->
+<section id="learn-more" class="section">
+  <div class="learn-more-container">
+    <div class="learn-hero">
+      <h2>Transform Your Kitchen Experience</h2>
+      <p class="subtitle">Smart food management made simple</p>
+    </div>
+
+    <div class="features-overview">
+      <div class="feature-highlight">
+        <div class="feature-icon">
+          <i class="fas fa-thermometer-half"></i>
+        </div>
+        <h3>Real-Time Monitoring</h3>
+        <p>24/7 temperature tracking with smart alerts</p>
+      </div>
+
+      <div class="feature-highlight">
+        <div class="feature-icon">
+          <i class="fas fa-recycle"></i>
+        </div>
+        <h3>Waste Reduction</h3>
+        <p>Reduce food waste by up to 40% with expiration tracking</p>
+      </div>
+
+      <div class="feature-highlight">
+        <div class="feature-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <h3>Smart Suggestions</h3>
+        <p>AI-powered recipe recommendations based on your ingredients</p>
+      </div>
+    </div>
+
+    <div class="stats-section">
+      <div class="stat-card">
+        <div class="stat-number">95%</div>
+        <div class="stat-label">Reduction in Food Waste</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">1M+</div>
+        <div class="stat-label">Recipes Available</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">Smart Monitoring</div>
+      </div>
+    </div>
+
+    <div class="how-it-works">
+      <h2>How It Works</h2>
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h4>Add Your Items</h4>
+          <p>Scan or manually enter your groceries</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h4>Track & Monitor</h4>
+          <p>Get real-time updates on your fridge contents</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h4>Smart Suggestions</h4>
+          <p>Receive personalized recipe recommendations</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    </main>
+
+    
+    <footer>
+      <div class="footer-content">
+          <div class="footer-section">
+              <h4>About</h4>
+              <p>Reduce food waste with smart management</p>
+          </div>
+          <div class="footer-section">
+              <p>© 2024 SmartFridge<br>All rights reserved</p>
+          </div>
+          <div class="footer-section">
+              <div class="social-icons">
+                  <i class="fab fa-github"></i>
+                  <i class="fab fa-linkedin"></i>
+                  <i class="fas fa-envelope"></i>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
