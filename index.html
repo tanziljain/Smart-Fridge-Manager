@@ -15,21 +15,43 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">SmartFridge</a>
+            <a href="index.html" class="logo" id="freshguard-logo">
+                <i class="fas fa-snowflake"></i>
+                FreshGuard
+            </a>
             <ul class="nav-links">
                 <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#fridge">My Fridge</a></li>
                 <li><a href="#recipes">Recipes</a></li>
+                <li><a href="#meal-planner">Meal Planner</a></li>
+                <li><a href="#shopping">Shopping List</a></li>
+                <li><a href="#analytics">Analytics</a></li>
                 <li><a href="#learn-more">Learn More</a></li>
             </ul>
 
-            <!-- Add in navbar -->
-<div class="theme-toggle">
-  <button id="themeToggle">
-      <span class="light-mode">🌞</span>
-      <span class="dark-mode">🌙</span>
-  </button>
-</div>
+            <!-- Notification Center -->
+            <div class="notification-center">
+                <button class="notification-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">0</span>
+                </button>
+                <div class="notification-dropdown">
+                    <div class="notification-header">
+                        <h3>Notifications</h3>
+                        <button class="clear-all" id="clearNotifications">Clear All</button>
+                    </div>
+                    <div class="notification-list" id="notificationList">
+                        <!-- Notifications will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-toggle">
+                <button id="themeToggle">
+                    <span class="light-mode">🌞</span>
+                    <span class="dark-mode">🌙</span>
+                </button>
+            </div>
             <div class="auth-buttons">
                 <button id="loginBtn" class="btn-auth">Login</button>
                 <button id="signupBtn" class="btn-auth btn-primary">Sign Up</button>
@@ -46,14 +68,15 @@
   <div class="modal-content">
       <span class="close-modal">&times;</span>
       <div class="auth-forms">
-          <div class="auth-form active" id="loginForm">
-              <h3>Login</h3>
-              <form id="loginForm">
-                  <div class="form-group">
-                      <label>Email</label>
-                      <input type="email" id="loginEmail" required>
-                      <span class="error-message"></span>
-                  </div>
+        <div class="auth-form active" id="loginForm">
+          <h3>Login</h3>
+          <form id="loginForm">
+              <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" id="loginEmail" required>
+                  <span class="error-message" id="loginError"></span>
+              </div>
+
                   <div class="form-group">
                       <label>Password</label>
                       <input type="password" id="loginPassword" required>
@@ -64,14 +87,14 @@
               <p class="auth-switch">Don't have an account? <a href="#signup">Sign Up</a></p>
           </div>
 
-          <div class="auth-form" id="signupForm">
-              <h3>Sign Up</h3>
-              <form id="signupForm">
-                  <div class="form-group">
-                      <label>Name</label>
-                      <input type="text" id="signupName" required>
-                      <span class="error-message"></span>
-                  </div>
+ <div class="auth-form" id="signupForm">
+    <h3>Sign Up</h3>
+    <form id="signupForm">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="signupName" required>
+            <span class="error-message" id="signupError"></span>
+        </div>
                   <div class="form-group">
                       <label>Email</label>
                       <input type="email" id="signupEmail" required>
@@ -218,44 +241,241 @@
 
         <!-- Recipes Section -->
         <section id="recipes" class="section">
-            <h2>Recipe Generator</h2>
-            
-            <div class="recipe-controls">
-                <div class="available-ingredients">
-                    <h3>Available Ingredients</h3>
-                    <div class="ingredients-list" id="ingredientsList">
-                        <!-- Ingredients will be added here -->
+            <div class="section-header">
+                <h2>Recipe Generator</h2>
+            </div>
+            <div class="recipe-section">
+                <div class="recipe-controls">
+                    <div class="ingredients-input">
+                        <input type="text" id="ingredient-input" placeholder="Add ingredients from your fridge...">
+                        <button class="btn btn-primary" id="add-ingredient">Add</button>
                     </div>
-                    <div class="add-custom-ingredient">
-                        <input type="text" placeholder="Add custom ingredient..." id="customIngredient">
-                        <button id="addIngredientBtn" class="btn-secondary">+ Add</button>
+                    <div class="recipe-filters">
+                        <select id="cuisine-filter">
+                            <option value="">All Cuisines</option>
+                            <option value="italian">Italian</option>
+                            <option value="mexican">Mexican</option>
+                            <option value="indian">Indian</option>
+                            <option value="chinese">Chinese</option>
+                            <option value="japanese">Japanese</option>
+                            <option value="thai">Thai</option>
+                            <option value="mediterranean">Mediterranean</option>
+                        </select>
+                        <select id="diet-filter">
+                            <option value="">All Diets</option>
+                            <option value="vegetarian">Vegetarian</option>
+                            <option value="vegan">Vegan</option>
+                            <option value="gluten-free">Gluten Free</option>
+                            <option value="ketogenic">Ketogenic</option>
+                            <option value="paleo">Paleo</option>
+                        </select>
+                        <button class="btn btn-primary" id="generate-recipes">Generate Recipes</button>
+                    </div>
+                </div>
+
+                <div class="ingredients-list" id="selected-ingredients">
+                    <!-- Ingredient tags will be added here dynamically -->
+                </div>
+
+                <div class="loading-state" id="recipe-loading">
+                    <div class="loader"></div>
+                    <p>Generating recipes...</p>
+                </div>
+
+                <div class="recipe-results" id="recipe-results">
+                    <!-- Recipe cards will be added here dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Meal Planner Section -->
+        <section id="meal-planner" class="section">
+            <div class="section-header">
+                <h2>Meal Planner</h2>
+                <button id="addMealBtn" class="btn-primary">+ Add Meal</button>
+            </div>
+            
+            <div class="meal-planner-container">
+                <div class="calendar-view">
+                    <div class="calendar-header">
+                        <button id="prevWeek"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="currentWeek">Week of May 1, 2024</h3>
+                        <button id="nextWeek"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="meal-calendar" id="mealCalendar">
+                        <!-- Calendar will be populated dynamically -->
                     </div>
                 </div>
                 
-                <div class="recipe-filters">
-                    <button id="generateRecipesBtn" class="btn-primary">Generate Recipes</button>
-                    <select id="cuisineFilter">
-                        <option value="any">Any Cuisine</option>
-                        <option value="italian">Italian</option>
-                        <option value="indian">Indian</option>
-                        <option value="mexican">Mexican</option>
-                        <option value="chinese">Chinese</option>
-                    </select>
-                    <select id="mealTypeFilter">
-                        <option value="any">Any Meal</option>
-                        <option value="breakfast">Breakfast</option>
-                        <option value="lunch">Lunch</option>
-                        <option value="dinner">Dinner</option>
-                        <option value="snack">Snack</option>
+                <div class="meal-suggestions">
+                    <h3>Suggested Meals</h3>
+                    <div class="suggestion-list" id="mealSuggestions">
+                        <!-- Suggestions will be added here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shopping List Section -->
+        <section id="shopping" class="section">
+            <div class="section-header">
+                <h2>Shopping List</h2>
+                <div class="shopping-controls">
+                    <button id="addItemToList" class="btn-primary">+ Add Item</button>
+                    <button id="generateFromRecipes" class="btn-secondary">Generate from Recipes</button>
+                </div>
+            </div>
+            
+            <div class="shopping-container">
+                <div class="categories-list">
+                    <div class="category" id="produceList">
+                        <h3>Produce</h3>
+                        <ul class="shopping-items">
+                            <!-- Items will be added here -->
+                        </ul>
+                    </div>
+                    <div class="category" id="dairyList">
+                        <h3>Dairy</h3>
+                        <ul class="shopping-items">
+                            <!-- Items will be added here -->
+                        </ul>
+                    </div>
+                    <div class="category" id="pantryList">
+                        <h3>Pantry</h3>
+                        <ul class="shopping-items">
+                            <!-- Items will be added here -->
+                        </ul>
+                    </div>
+                    <!-- More categories -->
+                </div>
+                
+                <div class="shopping-summary">
+                    <h3>Summary</h3>
+                    <div class="estimated-cost">
+                        <p>Estimated Total: <span id="estimatedTotal">$0.00</span></p>
+                    </div>
+                    <button id="shareList" class="btn-secondary">Share List</button>
+                    <button id="exportList" class="btn-secondary">Export List</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="section">
+            <div class="section-header">
+                <h2>Food Analytics</h2>
+                <div class="date-filter">
+                    <select id="dateRange" class="btn-secondary">
+                        <option value="7">Last 7 Days</option>
+                        <option value="30" selected>Last 30 Days</option>
+                        <option value="90">Last 3 Months</option>
+                        <option value="365">Last Year</option>
                     </select>
                 </div>
             </div>
             
-            <div class="recipe-results" id="recipeResults">
-                <!-- Recipes will be dynamically added here -->
-                <div class="empty-state">
-                    <i class="fas fa-utensils"></i>
-                    <p>Generate recipes based on your available ingredients</p>
+            <div class="analytics-container">
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>Waste Reduction</h3>
+                        <div class="chart-container">
+                            <canvas id="wasteChart"></canvas>
+                        </div>
+                        <div class="chart-info">
+                            <div class="stat-highlight">
+                                <span class="value">-35%</span>
+                                <span class="label">Food Waste</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h3>Spending Analysis</h3>
+                        <div class="chart-container">
+                            <canvas id="spendingChart"></canvas>
+                        </div>
+                        <div class="chart-info">
+                            <div class="stat-highlight">
+                                <span class="value">$245</span>
+                                <span class="label">Saved this month</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h3>Most Used Ingredients</h3>
+                        <div class="chart-container">
+                            <canvas id="ingredientsChart"></canvas>
+                        </div>
+                        <div class="ingredients-list">
+                            <div class="ingredient-item">
+                                <span class="name">Milk</span>
+                                <span class="usage">85%</span>
+                            </div>
+                            <div class="ingredient-item">
+                                <span class="name">Eggs</span>
+                                <span class="usage">72%</span>
+                            </div>
+                            <div class="ingredient-item">
+                                <span class="name">Vegetables</span>
+                                <span class="usage">65%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h3>Nutritional Overview</h3>
+                        <div class="chart-container">
+                            <canvas id="nutritionChart"></canvas>
+                        </div>
+                        <div class="nutrition-summary">
+                            <div class="nutrition-item">
+                                <span class="label">Protein</span>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div class="nutrition-item">
+                                <span class="label">Carbs</span>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="nutrition-item">
+                                <span class="label">Fats</span>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 45%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="insights-panel">
+                    <h3>Smart Insights</h3>
+                    <div class="insights-list">
+                        <div class="insight-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <div class="insight-content">
+                                <h4>Waste Reduction Opportunity</h4>
+                                <p>Consider using leafy greens within 3 days to prevent spoilage.</p>
+                            </div>
+                        </div>
+                        <div class="insight-card">
+                            <i class="fas fa-chart-line"></i>
+                            <div class="insight-content">
+                                <h4>Shopping Pattern</h4>
+                                <p>You tend to buy more groceries on Sundays. Plan ahead to avoid overbuying.</p>
+                            </div>
+                        </div>
+                        <div class="insight-card">
+                            <i class="fas fa-utensils"></i>
+                            <div class="insight-content">
+                                <h4>Recipe Suggestion</h4>
+                                <p>Based on your ingredients, try making a stir-fry this week.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -296,16 +516,16 @@
 
     <div class="stats-section">
       <div class="stat-card">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">Smart Monitoring</div>
+      </div>
+      <div class="stat-card">
         <div class="stat-number">95%</div>
         <div class="stat-label">Reduction in Food Waste</div>
       </div>
       <div class="stat-card">
         <div class="stat-number">1M+</div>
         <div class="stat-label">Recipes Available</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">24/7</div>
-        <div class="stat-label">Smart Monitoring</div>
       </div>
     </div>
 
